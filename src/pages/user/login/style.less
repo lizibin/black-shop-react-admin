@@ -1,0 +1,59 @@
+@import '~antd/es/style/themes/default.less';
+
+.main {
+  width: 368px;
+  margin: 0 auto;
+  @media screen and (max-width: @screen-sm) {
+    width: 95%;
+  }
+
+  .icon {
+    margin-left: 16px;
+    color: rgba(0, 0, 0, 0.2);
+    font-size: 24px;
+    vertical-align: middle;
+    cursor: pointer;
+    transition: color 0.3s;
+
+    &:hover {
+      color: @primary-color;
+    }
+  }
+
+  .other {
+    margin-top: 24px;
+    line-height: 22px;
+    text-align: left;
+
+    .register {
+      float: right;
+    }
+  }
+
+  :global {
+    .antd-pro-login-submit {
+      width: 100%;
+      // margin-top: 24px;
+    }
+    .ant-input {
+      border-radius: 2em;
+      opacity: 0.8;
+    }
+    .ant-btn {
+      border-radius: 2em;
+      opacity: 0.8;
+    }
+    .ant-btn-primary {
+      background-image: linear-gradient(to right, #DF9DC7 , #E3DBED);
+      border-color: white;
+    }
+    .ant-checkbox-checked .ant-checkbox-inner {
+      background-image: linear-gradient(to right, #DF9DC7 , #E3DBED);
+      background: #DF9DC7;
+      border-color: #DF9DC7;
+    }
+    .has-error .ant-form-explain, .has-error .ant-form-split {
+      color: #FDF9FF;
+    }
+  }
+}
