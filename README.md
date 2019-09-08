@@ -1,4 +1,4 @@
-# black-shop-vue-admin
+# black-shop-react-admin
 
 黑店后台管理系统，基于 antd-design-pro 开发采用 react + redux + dva + umi + typescript 等开源技术进行开发
 
