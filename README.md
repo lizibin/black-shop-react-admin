@@ -1,6 +1,6 @@
 # black-shop-vue-admin
-黑店后台管理系统，基于antd-design-pro开发
-采用react + redux + dva + umi + typescript 等开源技术进行开发
+
+黑店后台管理系统，基于 antd-design-pro 开发采用 react + redux + dva + umi + typescript 等开源技术进行开发
 
 ## 安装
 
@@ -18,6 +18,12 @@ yarn
 
 ```bash
 npm start
+```
+
+或者
+
+```bash
+yarn start
 ```
 
 ### 打包
@@ -43,4 +49,3 @@ npm run lint:fix
 ```bash
 npm test
 ```
-
