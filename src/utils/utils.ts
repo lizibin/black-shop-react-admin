@@ -21,4 +21,26 @@ export const isAntDesignProOrDev = (): boolean => {
   return isAntDesignPro();
 };
 
+export const clearAuthority = () => {
+  localStorage.removeItem('antd-pro-authority');
+  localStorage.removeItem('black-shop-token');
+  localStorage.removeItem('user_id');
+  localStorage.removeItem('username');
+};
+
+export function setAuthority(authority: string | string[]) {
+  const proAuthority = typeof authority === 'string' ? [authority] : authority;
+  return localStorage.setItem('antd-pro-authority', JSON.stringify(proAuthority));
+}
+
+export function saveLoginInfo(res: any) {
+  localStorage.setItem('black-shop-token', res.access_token);
+  localStorage.setItem('user_id', res.user_id);
+  localStorage.setItem('username', res.username);
+}
+
+export function getToken() {
+  return localStorage.getItem('black-shop-token');
+}
+
 export const getPageQuery = () => parse(window.location.href.split('?')[1]);

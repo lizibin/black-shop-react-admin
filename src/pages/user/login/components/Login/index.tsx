@@ -3,28 +3,26 @@ import React, { Component } from 'react';
 import { FormComponentProps } from 'antd/es/form';
 import classNames from 'classnames';
 import LoginContext, { LoginContextProps } from './LoginContext';
-import LoginItem, { LoginItemProps, LoginItemType } from './LoginItem';
+import LoginItem, { LoginItemProps } from './LoginItem';
 
 import LoginSubmit from './LoginSubmit';
 import LoginTab from './LoginTab';
 import styles from './index.less';
-import { LoginParamsType } from '@/services/login';
 
 export interface LoginProps {
   defaultActiveKey?: string;
   onTabChange?: (key: string) => void;
   style?: React.CSSProperties;
-  onSubmit?: (error: unknown, values: LoginParamsType) => void;
+  onSubmit?: (error: any, values: any) => void;
   className?: string;
   form: FormComponentProps['form'];
-  onCreate?: (form?: FormComponentProps['form']) => void;
   children: React.ReactElement<LoginTab>[];
 }
 
 interface LoginState {
   tabs?: string[];
   type?: string;
-  active?: { [key: string]: unknown[] };
+  active?: { [key: string]: any[] };
 }
 
 class Login extends Component<LoginProps, LoginState> {
@@ -54,13 +52,6 @@ class Login extends Component<LoginProps, LoginState> {
       tabs: [],
       active: {},
     };
-  }
-
-  componentDidMount() {
-    const { form, onCreate } = this.props;
-    if (onCreate) {
-      onCreate(form);
-    }
   }
 
   onSwitch = (type: string) => {
@@ -114,7 +105,7 @@ class Login extends Component<LoginProps, LoginState> {
     const { form, onSubmit } = this.props;
     const activeFields = active[type] || [];
     if (form) {
-      form.validateFields(activeFields as string[], { force: true }, (err, values) => {
+      form.validateFields(activeFields, { force: true }, (err, values) => {
         if (onSubmit) {
           onSubmit(err, values);
         }
@@ -126,15 +117,15 @@ class Login extends Component<LoginProps, LoginState> {
     const { className, children } = this.props;
     const { type, tabs = [] } = this.state;
     const TabChildren: React.ReactComponentElement<LoginTab>[] = [];
-    const otherChildren: React.ReactElement<unknown>[] = [];
+    const otherChildren: React.ReactElement<any>[] = [];
     React.Children.forEach(
       children,
-      (child: React.ReactComponentElement<LoginTab> | React.ReactElement<unknown>) => {
+      (child: React.ReactComponentElement<LoginTab> | React.ReactElement<any>) => {
         if (!child) {
           return;
         }
         if (child.type.typeName === 'LoginTab') {
-          TabChildren.push(child as React.ReactComponentElement<LoginTab>);
+          TabChildren.push(child);
         } else {
           otherChildren.push(child);
         }

@@ -4,8 +4,8 @@ import { Effect } from 'dva';
 import { stringify } from 'querystring';
 
 import { fakeAccountLogin, getFakeCaptcha } from '@/services/login';
-import { setAuthority } from '@/utils/authority';
-import { getPageQuery } from '@/utils/utils';
+import { getPageQuery, clearAuthority, saveLoginInfo } from '@/utils/utils';
+import { setAuthority } from '../utils/utils';
 
 export interface StateType {
   status?: 'ok' | 'error';
@@ -35,13 +35,19 @@ const Model: LoginModelType = {
 
   effects: {
     *login({ payload }, { call, put }) {
+      // 登录
       const response = yield call(fakeAccountLogin, payload);
+
       yield put({
         type: 'changeLoginStatus',
-        payload: response,
+        payload: { status: 'ok', type: payload.type },
       });
-      // Login successfully
-      if (response.status === 'ok') {
+      if (response && response.access_token) {
+        // Login successfully
+        // TODO 判断状态
+        // 保存token
+        saveLoginInfo(response);
+        setAuthority(['user', 'admin']); // 先写死角色
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
         let { redirect } = params as { redirect: string };
@@ -66,6 +72,8 @@ const Model: LoginModelType = {
     },
     *logout(_, { put }) {
       const { redirect } = getPageQuery();
+      // 清除登录信息
+      clearAuthority();
       // redirect
       if (window.location.pathname !== '/user/login' && !redirect) {
         yield put(
@@ -82,7 +90,6 @@ const Model: LoginModelType = {
 
   reducers: {
     changeLoginStatus(state, { payload }) {
-      setAuthority(payload.currentAuthority);
       return {
         ...state,
         status: payload.status,

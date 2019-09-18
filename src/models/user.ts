@@ -50,6 +50,7 @@ const UserModel: UserModelType = {
       });
     },
     *fetchCurrent(_, { call, put }) {
+      // 拉取用户信息
       const response = yield call(queryCurrent);
       yield put({
         type: 'saveCurrentUser',
