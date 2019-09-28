@@ -294,6 +294,7 @@ export default {
                   name: 'editor',
                   icon: 'highlight',
                   path: '/editor',
+                  authority: ['admin', 'user'],
                   routes: [
                     {
                       name: 'flow',
@@ -374,13 +375,14 @@ export default {
   manifest: {
     basePath: '/',
   },
-  chainWebpack: webpackPlugin, // proxy: {
-  //   '/server/api/': {
-  //     target: 'https://preview.pro.ant.design/',
-  //     changeOrigin: true,
-  //     pathRewrite: {
-  //       '^/server': '',
-  //     },
-  //   },
-  // },
+  chainWebpack: webpackPlugin,
+  proxy: {
+    '/server/': {
+      target: 'http://localhost:3000/',
+      changeOrigin: true,
+      pathRewrite: {
+        '^/server': '',
+      },
+    },
+  },
 } as IConfig;
